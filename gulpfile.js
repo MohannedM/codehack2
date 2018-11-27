@@ -16,14 +16,13 @@ elixir(function(mix) {
 
     .styles([
 
-    	'libs/blog-post.css',
-    	'libs/bootstrap.css',
-    	'libs/font-awesome.css',
-    	'libs/metisMenu.css',
-    	'libs/sb-admin-2.css'
+        'libs/blog-post.css',
+        'libs/bootstrap.css',
+        'libs/font-awesome.css',
+        'libs/metisMenu.css',
+        'libs/sb-admin-2.css'
 
-
-    	], './public/css/libs.css')
+        ], './public/css/libs.css')
 
     .scripts([
 
