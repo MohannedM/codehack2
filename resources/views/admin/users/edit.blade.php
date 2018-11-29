@@ -40,12 +40,18 @@
 		{!! Form::label('password', 'Password:') !!}
 		{!! Form::password('password', ['class'=>'form-control']) !!}
 	</div>
-	<div class="form-group">
-		{!! Form::submit('Create User', ['class'=>'btn btn-primary']) !!}
-	</div>
-
+	<div class="col-sm-6">
+		{!! Form::submit('Update User', ['class'=>'btn btn-primary pull-left']) !!}
 	</div>
 {!! Form::close() !!}
+	<div class="col-sm-6">
+		{!! Form::open(['method'=>'DELETE', 'action'=>['AdminUsersController@destroy', $user->id]]) !!}
+			{!! Form::submit('Delete User', ['class'=>'btn btn-danger pull-right']) !!}
+		{!! Form::close() !!}
+	</div>
+</div>
+
+
 </div>
 <div class="row">
 @if(count($errors) > 0)

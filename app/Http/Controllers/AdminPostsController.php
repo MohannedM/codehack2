@@ -4,21 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Session;
-
-use App\User;
-
-use App\Role;
-
-use App\Photo;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\PostsCreateRequest;
 
-use App\Http\Requests\EditUsersRequest;
+use App\Post;
 
-class AdminUsersController extends Controller
+use App\Photo;
+
+class AdminPostsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,8 +25,9 @@ class AdminUsersController extends Controller
     {
         //
 
-        $users = User::all();
-        return view('admin.users.index', compact('users'));
+        $posts = Post::all();
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -41,8 +38,7 @@ class AdminUsersController extends Controller
     public function create()
     {
         //
-        $roles = Role::lists('name', 'id')->all();
-        return view('admin.users.create', compact('roles'));
+        return view('admin.posts.create');
     }
 
     /**
@@ -51,9 +47,10 @@ class AdminUsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(PostsCreateRequest $request)
     {
         //
+        $user = Auth::user();
 
         $input = $request->all();
 
@@ -69,12 +66,9 @@ class AdminUsersController extends Controller
 
         }
 
-        $input['password'] = bcrypt($request->password);
+        $user->posts()->create($input);
 
-
-        $user = User::create($input);
-
-        return redirect('/admin/users');
+        return redirect('/admin/posts');
     }
 
     /**
@@ -97,9 +91,7 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
         //
-        $user = User::findOrFail($id);
-        $roles = Role::lists('name', 'id')->all();
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('admin.posts.edit', $id);
     }
 
     /**
@@ -109,37 +101,9 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditUsersRequest $request, $id)
+    public function update(Request $request, $id)
     {
         //
-        $user = User::findOrFail($id);
-
-        if(trim($request->password) == ''){
-            $input = $request->except('password');
-        } else {
-            $input = $request->all();
-
-            $input['password'] = bcrypt($request->password);
-        }
-
-        
-
-        if($file = $request->file('photo_id')){
-
-            $name = time() . $file->getClientOriginalName();
-
-            $file->move('images', $name);
-
-            $photo = Photo::create(['file'=>$name]);
-
-            $input['photo_id'] = $photo->id;
-
-        }
-
-        $user->update($input);
-
-        return redirect('/admin/users');
-
     }
 
     /**
@@ -151,17 +115,5 @@ class AdminUsersController extends Controller
     public function destroy($id)
     {
         //
-        $user = User::findOrFail($id);
-
-
-            unlink(public_path() . $user->photo->file);
-
-
-        $user->delete();
-
-        Session::flash('deleted_user', 'The user has been deleted');
-
-        return redirect('/admin/users');
-
     }
 }

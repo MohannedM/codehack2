@@ -5,6 +5,13 @@
 
 <h1>Users</h1>
 
+
+@if(Session::has('deleted_user'))
+	
+	<p class="alert-danger">The user has been deleted</p>
+
+@endif
+
 @if($users)
 <table class="table">
 	<thead>
