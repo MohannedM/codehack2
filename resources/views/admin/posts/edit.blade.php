@@ -29,7 +29,7 @@
 	{!! Form::textarea('body', null, ['class'=>'form-control']) !!}
 </div>
 <div class="col-sm-6">
-	{!! Form::submit('Create Post', ['class'=>'btn btn-primary pull-left']) !!}
+	{!! Form::submit('Update Post', ['class'=>'btn btn-primary pull-left']) !!}
 </div>
 
 {!! Form::close() !!}

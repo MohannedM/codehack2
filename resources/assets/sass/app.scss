@@ -1,5 +1,13 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
+body {
+    padding-top: 70px; 
+}
 #admin-page{
 	padding-top: 0 !important;
+}
+#comment_reply{
+	margin-top:50px;
+}
+.comment-reply{
+	display:none;
 }

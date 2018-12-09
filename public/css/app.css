@@ -1,4 +1,16 @@
-#admin-page {
-  padding-top: 0 !important; }
+body {
+  padding-top: 70px;
+}
 
-/*# sourceMappingURL=app.css.map */
+#admin-page {
+  padding-top: 0 !important;
+}
+
+#comment_reply {
+  margin-top: 50px;
+}
+
+.comment-reply {
+  display: none;
+}
+
